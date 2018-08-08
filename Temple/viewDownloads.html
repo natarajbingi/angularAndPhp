@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appHome">
+
+<head>
+    <title>SRI RAGHAVENDRA SWAMY MUTT, MARIYAMMANA-HALLI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/myStyleSheet.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/angular_132.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
+    <style>
+        body {
+            background-image: url("./imgs/bg.jpg");
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body ng-controller="viewDownloadCtrl" >
+<!--Default Content Starts-->
+
+<div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="imgs/rag_one.jpg" class="img-rounded" width="130px" height="155px">
+            </div>
+            <div class="col-md-6">
+                <h2 class="HeaderText text-center">SRI RAGHAVENDRA SWAMY MUTT
+                    <small>MARIYAMMANAHALLI-583222</small>
+                </h2>
+            </div>
+            <div class="col-md-6">
+                <h2 class="HeaderText text-center">ಶ್ರೀ ರಾಘವೇಂದ್ರ ಸ್ವಾಮಿಗಳ ಮಠ
+                    <br/> <small> ಮರಿಯಮ್ಮನಹಳ್ಳಿ - 583222</small>
+                </h2>
+            </div>
+            <div class="col-md-3">
+                <!--<img src="imgs/rag_two.jpg" class="img-rounded" width="110px" height="155px">-->
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="made navbar navbar-inverse " data-spy="affix" data-offset-top="155">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<a class="navbar-brand" href="#">viewDownloads.html</a>-->
+        </div>
+        <div class="collapse navbar-collapse " id="myNavbar">
+            <ul class="nav navbar-nav ">
+                <li><a href="home.html">HOME</a></li>
+                <li><a href="sevaBooking.html">SAVA's BOOKING</a></li>
+                <li class="active"><a href="#">DOWNLOADS</a></li>
+                <li><a href="onlineBooking.html">ONLINE BOOKING</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">SETTINGS
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">ADD NEW SEVA TO LIST</a></li>
+                        <li  class="active"><a href="addSubEmploee.html">MANAGE</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" ng-click="logout()"><span class="fa fa-lock logOutHere"></span> Logout</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--Default Content Ends-->
+
+<!--Dynamic Content Starts-->
+<div class="container" ng-cloak>
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#BillReceipt"><strong>Invoice Receipts</strong></a>
+        </li>
+        <li><a data-toggle="tab" href="#newMember"><strong>Members List</strong></a></li>
+        <li><a data-toggle="tab" href="#newSeva"><strong>Sevas List</strong></a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="BillReceipt" class="tab-pane fade in active">
+
+            <div class="row" style="margin: 5px 0;">
+                <div class="col-md-3">
+                    <button class="btn btn-success" ng-click="exportToExcel('#Bills-List')">
+                        <span class="fa fa-download "></span> Export to Excel
+                    </button>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <input class="form-control" id="newSearchBills" type="text"
+                           ng-model="newSearchBills"
+                           aria-describedby="classDescriptionameHelp"
+                           placeholder="Search..">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="w3-table-all " id="Bills-List">
+                    <tr class="w3-blue">
+                        <th>Invoice No</th>
+                        <th>Invoice Date</th>
+                        <th>Name</th>
+                        <th>Gothra</th>
+                        <th>Nakshatra</th>
+                        <th>Mobile</th>
+                        <th>Amount</th>
+                        <th style="width:350px;">Address</th>
+                    </tr>
+                    <tr ng-repeat="member in sevaBillsList | filter:newSearchBills ">
+                        <td>{{member._id}}</td>
+                        <td>{{member.entered_date_invoice_}}</td>
+                        <td>{{member.memberName}}</td>
+                        <td>{{member.gothra}}</td>
+                        <td>{{member.nakshatra}}</td>
+                        <td>{{member.mobile}}</td>
+                        <td>{{member.BillingSeavsIDAmt}}</td>
+                        <td style="width:255px;">{{member.address }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="newMember" class="tab-pane fade">
+            <div class="row" style="margin: 5px 0;">
+                <div class="col-md-3">
+                    <button class="btn btn-success" ng-click="exportToExcel('#Members-List')">
+                        <span class="fa fa-download "></span> Export to Excel
+                    </button>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <input class="form-control" id="newSearch" type="text"
+                           ng-model="newSearch"
+                           aria-describedby="classDescriptionameHelp"
+                           placeholder="Search..">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="w3-table-all " id="Members-List">
+                    <tr class="w3-blue">
+                        <th>Sl.No</th>
+                        <th>Name</th>
+                        <th>Gothra</th>
+                        <th>Nakshatra</th>
+                        <th>Mobile / Phone</th>
+                        <th style="width:350px;">Address</th>
+                    </tr>
+                    <tr ng-repeat="member in sevaMemberList | filter:newSearch ">
+                        <td>{{member.id}}</td>
+                        <td>{{member.firstname+' '+member.midname+' '+member.lastname}}</td>
+                        <td>{{member.gothra}}</td>
+                        <td>{{member.nakshatra}}</td>
+                        <td>{{member.mobile}} / {{member.phone}}</td>
+                        <td style="width:255px;">{{member.address+', '+member.town_village+', '+member.taluk+', '
+                            +member.district+','+member.state }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="newSeva" class="tab-pane fade">
+
+            <div class="row" style="margin: 5px 0;">
+                <div class="col-md-3">
+                    <button class="btn btn-success" ng-click="exportToExcel('#Seva-List')">
+                        <span class="fa fa-download "></span> Export to Excel
+                    </button>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <input class="form-control" id="newSearch1" type="text"
+                           ng-model="newSearch1"
+                           aria-describedby="classDescriptionameHelp"
+                           placeholder="Search..">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table class="w3-table-all " id="Seva-List">
+                    <tr class="w3-blue">
+                        <th>Sl.No</th>
+                        <th>Seva Name</th>
+                        <th>Amount</th>
+                        <th>Discount</th>
+                    </tr>
+                    <tr ng-repeat="seva in sevaNamesList | filter:newSearch1">
+                        <td>{{seva.id}}</td>
+                        <td>{{seva.seva_name}}</td>
+                        <td>{{seva.seva_amount}}</td>
+                        <td>{{seva.discount}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!--Dynamic Content Starts-->
+
+
+<div class="request">
+    <span> Hello</span>
+</div>
+<script src="js/myHomeScript.js" type="application/javascript"></script>
+</body>
+</html>

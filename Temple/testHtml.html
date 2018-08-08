@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appHome">
+<head>
+    <title>SRI RAGHAVENDRA SWAMY MUTT, MARIYAMMANA-HALLI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/myStyleSheet.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/angular_132.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
+    <style>
+        body {
+            background-image: url("./imgs/bg.jpg");
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body ng-controller="testCtrl">
+<!--Default Content Starts-->
+<div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="imgs/rag_one.jpg" class="img-rounded" width="130px" height="155px">
+            </div>
+            <div class="col-md-6">
+                <h2 class="HeaderText text-center">SRI RAGHAVENDRA SWAMY MUTT
+                    <small>MARIYAMMANAHALLI</small>
+                </h2>
+            </div>
+            <div class="col-md-3">
+              <!-- <img src="imgs/rag_two.jpg" class="img-rounded" width="110px" height="155px">-->
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="made navbar navbar-inverse " data-spy="affix" data-offset-top="155">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<a class="navbar-brand" href="#">Logo</a>-->
+        </div>
+        <div class="collapse navbar-collapse " id="myNavbar">
+            <ul class="nav navbar-nav ">
+                <li class="active"><a href="#">HOME</a></li>
+                <li><a href="#">SAVA's BOOKING</a></li>
+                <li><a href="#">DOWNLOADS</a></li>
+                <li><a href="#">ONLINE BOOKING</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">SETTINGS
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">ADD NEW SEVA TO LIST</a></li>
+                        <li><a href="#">MANAGE</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--Default Content Ends-->
+
+<div class="container">
+    <h2>Modal Login Example</h2>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-default btn-lg" id="myBtn">Login</button>
+
+
+    <form ng-submit="uploadFile()" method="post" enctype="multipart/form-data">
+        Select image to upload:
+        <input type="text" ng-model="name">
+        <input type="file" ng-model="fileToUpload" file-model="fileToUpload" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload Image" name="submit">
+    </form>
+
+
+    <div class="page-header">
+        {{sevaGetTestList|json}}
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                            <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                            <input type="text" class="form-control" id="psw" placeholder="Enter password">
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="" checked>Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block"><span
+                                class="glyphicon glyphicon-off"></span> Login
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-remove"></span> Cancel
+                    </button>
+                    <p>Not a member? <a href="#">Sign Up</a></p>
+
+                    <p>Forgot <a href="#">Password?</a></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/myHomeScript.js" type="application/javascript"></script>
+<script>
+    $(document).ready(function () {
+        $("#myBtn").click(function () {
+            $("#myModal").modal();
+        });
+    });
+</script>
+</body>
+</html>
+

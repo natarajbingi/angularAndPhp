@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appHome">
+
+<head>
+    <title>SRI RAGHAVENDRA SWAMY MUTT, MARIYAMMANA-HALLI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/myStyleSheet.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/angular_132.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
+    <style>
+        body {
+            background-image: url("./imgs/bg.jpg");
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body  ng-controller="OnlineCtrl">
+<!--Default Content Starts-->
+
+<div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="imgs/rag_one.jpg" class="img-rounded" width="130px" height="155px">
+            </div>
+            <div class="col-md-6">
+                <h2 class="HeaderText text-center">SRI RAGHAVENDRA SWAMY MUTT
+                    <small>MARIYAMMANAHALLI-583222</small>
+                </h2>
+            </div>
+            <div class="col-md-6">
+                <h2 class="HeaderText text-center">ಶ್ರೀ ರಾಘವೇಂದ್ರ ಸ್ವಾಮಿಗಳ ಮಠ
+                    <br/> <small> ಮರಿಯಮ್ಮನಹಳ್ಳಿ - 583222</small>
+                </h2>
+            </div>
+            <div class="col-md-3">
+                <!--<img src="imgs/rag_two.jpg" class="img-rounded" width="110px" height="155px">-->
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="made navbar navbar-inverse " data-spy="affix" data-offset-top="155">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<a class="navbar-brand" href="#">onlineBooking.html</a>-->
+        </div>
+        <div class="collapse navbar-collapse " id="myNavbar">
+            <ul class="nav navbar-nav ">
+                <li><a href="home.html">HOME</a></li>
+                <li><a href="sevaBooking.html">SAVA's BOOKING</a></li>
+                <li><a href="viewDownloads.html" ng-if="accessNot">DOWNLOADS</a></li>
+                <li class="active"><a href="#">ONLINE BOOKING</a></li>
+                <li class="dropdown" ng-if="accessNot">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">SETTINGS
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="active"><a href="addSubEmploee.html">MANAGE</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" ng-click="logout()"><span class="fa fa-lock logOutHere"></span> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--Default Content Ends-->
+
+<!--Dynamic Content Starts-->
+<div class="container">
+
+</div>
+<!--Dynamic Content Starts-->
+
+<footer class="container-fluid text-center">
+    <p>@Copyright 2018</p>
+    <!--<form class="form-inline">Get deals:
+        <input type="email" class="form-control" size="50" placeholder="Email Address">
+        <button type="button" class="btn btn-danger">Sign Up</button>
+    </form>-->
+</footer>
+
+<script src="js/myHomeScript.js" type="application/javascript"></script>
+</body>
+</html>

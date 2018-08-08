@@ -1,0 +1,766 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="appHome">
+<head>
+    <title>SRI RAGHAVENDRA SWAMY MUTT, MARIYAMMANAHALLI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/myStyleSheet.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/angular_132.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
+    <style>
+        body {
+            background-image: url("./imgs/bg.jpg");
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body ng-controller="sevaCtrl">
+<!--Default Content Starts-->
+<div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="imgs/rag_one.jpg" class="img-rounded" width="130px" height="155px">
+            </div>
+            <div class="col-md-6">
+                <h2 class="HeaderText text-center">SRI RAGHAVENDRA SWAMY MUTT
+                    <small>MARIYAMMANAHALLI-583222</small>
+                </h2>
+            </div>
+            <div class="col-md-6">
+                <h2 class="HeaderText text-center">ಶ್ರೀ ರಾಘವೇಂದ್ರ ಸ್ವಾಮಿಗಳ ಮಠ
+                    <br/> <small> ಮರಿಯಮ್ಮನಹಳ್ಳಿ - 583222</small>
+                </h2>
+            </div>
+            <div class="col-md-3">
+                <!--<img src="imgs/rag_two.jpg" class="img-rounded" width="110px" height="155px">-->
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="made navbar navbar-inverse " data-spy="affix" data-offset-top="155">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--<a class="navbar-brand" href="#">sevaBooking.html</a>-->
+        </div>
+        <div class="collapse navbar-collapse " id="myNavbar">
+            <ul class="nav navbar-nav ">
+                <li><a href="home.html">HOME</a></li>
+                <li class="active"><a href="#">SAVA's BOOKING</a></li>
+                <li><a href="viewDownloads.html" ng-if="accessNot" >DOWNLOADS</a></li>
+                <li><a href="onlineBooking.html">ONLINE BOOKING</a></li>
+                <li class="dropdown"  ng-if="accessNot" >
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">SETTINGS
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li  class="active"><a href="addSubEmploee.html">MANAGE</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" ng-click="logout()"><span class="fa fa-lock logOutHere"></span> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--Default Content Ends-->
+
+<!--Dynamic Content Starts-->
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#BillReceipt"><strong>Generate Invoice</strong></a>
+        </li>
+        <li><a data-toggle="tab" href="#newMember" ><strong>Add New Member</strong></a></li>
+        <li><a data-toggle="tab" href="#newSeva" ng-if="accessNot" ><strong>Add New Seva</strong></a></li>
+    </ul>
+    <div class="tab-content" ng-cloak>
+        <div id="BillReceipt" class="tab-pane fade  in active">
+            <form name="BillReceipt" ng-submit="saveNewInvoice()" ng-show="BillReceiptInvoiceShowHide"
+                  style="margin-bottom: 85px;">
+                <div class="row panel panel-primary">
+                    <div class="panel-heading"><h4>New Bill Receipt</h4>
+                    </div>
+                    <div class="form-group" style="margin-top: 25px">
+                        <div class="col-md-12">
+                            <p class="bg-primary">Date<!-- of Challan--></p>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-3">
+                            <label for="entered_date_invoice">Date</label>
+                            <input type="date" class="form-control" id="entered_date_invoice"
+                                   ng-model="invoiceBill.entered_date_invoice"
+                                   required>
+
+                        </div>
+                        <div class="col-sm-3"><!-- ng-model="selected" firstname+' '+sevaEditMem.midname-->
+                            <label for="memberName">Enter Member Name <span style="color: #ff4500;">*</span></label>
+                            <input type="hidden" ng-model="invoiceBill.memberId">
+                            <input type="text" class="form-control" id="memberName"
+                                   ng-model="invoiceBill.memberName"
+                                   typeahead="user as (user.firstname + ' ' + user.lastname) for user in sevaMemberList | filter:$viewValue"
+                                   required>
+                        </div>
+                        <div class="col-sm-3">
+
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p class="bg-primary">Seva's Details</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <label for="SevaNameInvoce">Select SEVA NAME <span
+                                        style="color: #ff4500;">*</span></label>
+
+                                <select name="SevaNameInvoce" class="form-control"
+                                        ng-model="invoiceBill1.seva_name" id="SevaNameInvoce"
+                                        ng-options="v.seva_name  for v in sevaNamesList  track by v.id"
+                                        ng-change="setDefaultVals(invoiceBill1.seva_name)"
+                                >
+                                    <option value="">-- Please select --</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <label for="AmountInvoice">Amount</label>
+                                <input type="hidden" ng-model="invoiceBill1.sevaId">
+                                <input type="number" class="form-control" id="AmountInvoice"
+                                       ng-model="invoiceBill1.seva_amount"
+                                       disabled>
+
+                            </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-10">
+                                <label for="DiscountInvoice">Discount</label>
+                                <input type="number" class="form-control" id="DiscountInvoice"
+                                       ng-model="invoiceBill1.discount"
+                                       disabled>
+                            </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+                                <label for="DiscountInvoice"></label>
+                                <input type="button" class="btn btn-success btn-block" ng-click="addItem()" value="Add">
+                            </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+                                <label for="DiscountInvoice"></label>
+                                <input type="button" class="btn btn-primary btn-block" ng-click="resetForm()"
+                                       value="Reset">
+                            </div>
+                        </div>
+                        <div class="col-md-5 w3-card-2 w3-margin" ng-show="BillingSeavs.length>0">
+                            <header class="w3-container w3-light-grey w3-padding-8">
+                                <h4>Selected Seva's List</h4>
+                            </header>
+                            <ul class="w3-ul">
+                                <li ng-repeat="x in BillingSeavs" class="w3-padding-16">
+                                    Seva: {{($index+1)+ ') '+x.seva_name}}
+                                    <span ng-click="removeItem($index)" style="cursor:pointer;"
+                                          class="w3-right w3-margin-right">×</span>
+                                </li>
+                            </ul>
+                            <div class="w3-container w3-light-grey w3-padding-16">
+                                <!-- <div class="w3-row w3-margin-top">
+                                     <div class="w3-col s10">
+                                         <input placeholder="Add shopping items here" ng-model="addMe"
+                                                class="w3-input w3-border w3-padding">
+                                     </div>
+                                     <div class="w3-col s2">
+                                         <button class="w3-btn w3-padding w3-green">Add</button>
+                                     </div>
+                                 </div>-->
+                                <p class="w3-text-red">{{errortext}}</p>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="form-group" style="margin-top: 55px">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-success btn-block">Submit</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="button" ng-click="backToList()" class="btn btn-primary btn-block">Cancel
+                            </button>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-2"></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+            </form>
+            <div class="" ng-show="!BillReceiptInvoiceShowHide"><!---->
+                <div class="form-group form-row">
+
+                    <div class="col-md-2 ">
+                        <input type="button" ng-click="backToList()" class="btn btn-primary btn-block"
+                               value="<< BACK">
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2">
+                        <input type="button" ng-click="printDiv('InvoiceSecPrintID')" class="btn btn-success btn-block"
+                               value="PRINT INVOICE">
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="InvoiceContainer" id="InvoiceSecPrintID">
+                    <style>
+                        .clear {
+                            clear: both;
+                        }
+                    </style>
+                    <div style=" width: 765px;margin: 0 auto;padding: 20px;background: #f2f2f2;border: 2px solid #0056b3;border-radius: 2px;">
+                        <div class="header">
+                            <div class="headerLeft" style="width:25%;float: left;text-align: center">
+                                <img src="imgs/rag_hd_thr.jpg" style="width: auto;height: 125px;">
+                            </div>
+                            <div class="headerRight" style="width:74%;float: left;text-align: center">
+                                <div style="text-align: center">
+                                    <div class="headerRightTopOne">
+                                        || ಶ್ರೀಮನ್ ಮೂಲರಾಮೋ ವಿಜಯತೇ ||
+                                    </div>
+                                    <div class="headerRightTopTwo">
+                                        <h3><strong>ಶ್ರೀ ರಾಘವೇಂದ್ರ ಸ್ವಾಮಿಗಳ ಸನ್ನಿಧಾನ</strong></h3>
+                                    </div>
+                                    <div class="headerRightTopTwo">
+                                        <h5><b> 3ನೇ ವಾರ್ಡ್, ಮರಿಯಮ್ಮನಹಳ್ಳಿ - 583222.</b></h5>
+                                    </div>
+                                    <div class="headerRightTopTwo" style="padding: 0 10%">
+                                        <div style="width:49%;float: left;text-align: left">ತಾ. ಹೊಸಪೇಟೆ</div>
+                                        <div style="width:49%;float: left;text-align: right">ಬಳ್ಳಾರಿ ಜಿ.॥</div>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="headerRightTopTwo" style="text-align: center">
+                                        <div style="background-color: #808080;color: #ffffff; width: 180px;border:1px #000000 solid ;margin: 0 auto;border-radius: 5px;padding: 5px;">
+                                            <strong> ಸಾಮಾನ್ಯ ಪಾವತಿ </strong>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="memberDetails">
+                            <div class="memberDetailsTopOne">
+                                <div style="width:49%;float: left;text-align: left">ಸಂಖ್ಯೆ<span
+                                        style="font-weight: bolder;font-size: 18px">: {{invoiceNo}}</span>
+                                </div>
+                                <div style="width:49%;float: left;text-align: right">ದಿನಾ೦ಕ<span
+                                        style="font-weight: bolder;font-size: 18px;border-bottom: 1px dashed">: {{invoiceBillResponse[0].entered_date_invoice |   date:'dd-MM-yyyy'}}</span>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="memberDetailsTopOne" style="margin-top: 15px;">
+                                <div style="float: left;width: 15%;margin-top: 15px; "> ಶ್ರೀಮತಿ / ಶ್ರೀ:</div>
+                                <div style="width: 85%;float: left;text-align:center;margin-top: 15px;font-weight: bolder;font-size: 17px;border-bottom: 1px dashed">
+                                    {{invoiceBillResponse[0].memberName.firstname+' '
+                                    +invoiceBillResponse[0].memberName.lastname }}
+                                </div>
+                                <div style="float: left;width: 15%;margin-top: 15px;"> ವಿಳಾಸ:</div>
+                                <div style="width: 85%;float: left;text-align:center;margin-top: 15px;font-weight: bolder;font-size: 17px;border-bottom: 1px dashed">
+                                    {{invoiceBillResponse[0].memberName.address+' '
+                                    +invoiceBillResponse[0].memberName.town_village
+                                    + ', ' +invoiceBillResponse[0].memberName.taluk + '(Tq), '
+                                    +invoiceBillResponse[0].memberName.district
+                                    + ' (Dt), ' +invoiceBillResponse[0].memberName.state
+                                    }}
+                                </div>
+                                <div class="clear"></div>
+                                <div class="headerRightTopTwo" style="margin-top: 15px;">
+                                    <div style="width:49%;float: left;text-align: left;">
+                                        <div style="float: left;width: 15%">ಗೋತ್ರ:</div>
+                                        <div style="width: 85%;float: left;text-align:center;font-weight: bolder;font-size: 17px;border-bottom: 1px dashed">
+                                            {{invoiceBillResponse[0].memberName.gothra}}
+                                        </div>
+                                    </div>
+                                    <div style="width:49%;float: left;text-align: left">
+                                        <div style="float: left;width: 15%"> ನಕ್ಷತ:</div>
+                                        <div style="width: 85%;float: left;text-align:center;font-weight: bolder;font-size: 17px;border-bottom: 1px dashed">
+                                            {{invoiceBillResponse[0].memberName.nakshatra}}
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                            <div class="SevaDetailsTopOne" style="margin-top: 15px;">
+                                <table border="1" width="100%" style="min-height: 200px">
+                                    <tr>
+                                        <th style="padding-left: 10px">ಸೇವಾ ವಿವರಗಳು</th>
+                                        <th style="text-align: center">ರೂ.</th>
+                                        <th style="text-align: center">ಪೈ.</th>
+                                    </tr>
+                                    <tr ng-repeat="seva in invoiceBillResponse[0].sevaList">
+                                        <td style="padding-left: 10px">{{seva.seva_name}}</td>
+                                        <td style="text-align: center">{{seva.seva_amount}}</td>
+                                        <td style="text-align: center">.00</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: right;padding-right: 5px">Total:</th>
+                                        <th style="text-align: center">{{invoiceBillResponse[0].BillingSeavsIDAmt}}</th>
+                                        <th style="text-align: center">.00</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="SevaDetailsTopTwo" style="margin-top: 15px;">
+
+                                <div class="headerRightTopTwo" style="padding: 25px 0">
+                                    <div style="width:49%;float: left;text-align: center;font-weight: bold;margin-top: 25px">
+                                        ಸೇವಾ
+                                        ಕರ್ತರು
+                                    </div>
+                                    <div style="width:49%;float: left;text-align: center;font-weight: bold">
+                                        <strong>ವ್ಯವಸ್ಥಾಪಕರು</strong><br>
+                                        <span>ಶ್ರೀ ರಾಘವೇಂದ್ರ ಸೇವಾ ಸಮಿತಿ</span></div>
+                                    <div class="clear"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form name="newMember" ng-submit="saveNewMember()" id="newMember" class="tab-pane fade">
+            <div class="row panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Add New Member</h4>
+                </div>
+                <div class="form-group" style="margin-top: 25px">
+                    <div class="col-md-12">
+                        <p class="bg-primary">Date<!-- of Challan--></p>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <label for="entered_date">Date</label>
+                        <input type="date" class="form-control" id="entered_date" disabled
+                               ng-model="sevaMember.entered_date" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <strong style="padding-right: 20px">Permanent:</strong>
+                        <label class="containerInp form-control">
+                            <input type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'"
+                                   class=" w3-center" ng-model="sevaMember.permanent">
+
+                            <span class="checkmark"></span>
+                        </label>
+                        <span style="clear: both"></span></div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group" style="margin-top: 25px">
+                    <div class="col-md-12">
+                        <p class="bg-primary">Remitter Details</p>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <label for="firstName">First Name <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="firstName" ng-model="sevaMember.firstname" required>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="midName">Middle Name</label>
+                        <input type="text" class="form-control" id="midName" ng-model="sevaMember.midname">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="lastName">Last Name <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="lastName" ng-model="sevaMember.lastname" required>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group">
+
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <label for="Nakshatra">Nakshatra <span style="color: #ff4500;">*</span></label>
+                        <!--<input type="text" class="form-control" required>-->
+
+                        <select name="SevaNameInvoce" class="form-control"
+                                ng-model="sevaMember.nakshatra"  id="Nakshatra"
+                                ng-options="v as v for v in nakshatraList ">
+                            <option value="">-- Please select --</option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="Thithi">Thithi <span style="color: #ff4500;">*</span></label>
+                       <!-- <input type="text" class="form-control" >-->
+                        <select name="SevaNameInvoce" class="form-control"
+                               id="Thithi" ng-model="sevaMember.thithi" required
+                                ng-options="v as v for v in tithiList ">
+                            <option value="">-- Please select --</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="Rashi">Rashi <span style="color: #ff4500;">*</span></label>
+                        <!--<input type="text" class="form-control" ng-model="." required>-->
+
+                        <select name="SevaNameInvoce" class="form-control"
+                                ng-model="sevaMember.rashi" id="Rashi"
+                                ng-options="v as v for v in rashiList ">
+                            <option value="">-- Please select --</option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <label for="Gothra">Gothra <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="Gothra" ng-model="sevaMember.gothra" required>
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <p class="bg-primary">Address Details</p>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <label for="AddressOne">Address <span style="color: #ff4500;">*</span></label>
+                        <textarea type="text" class="form-control" id="AddressOne" ng-model="sevaMember.address"
+                                  required>
+
+            </textarea>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="TownVillage">Town/Village <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="TownVillage" ng-model="sevaMember.town_village"
+                               required>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="Taluk">Taluk <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="Taluk" ng-model="sevaMember.taluk" required>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <label for="District">District <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="District" ng-model="sevaMember.district" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="State">State <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="State" ng-model="sevaMember.state" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="Phone">Phone</label>
+                        <input type="number" class="form-control" id="Phone" ng-model="sevaMember.phone">
+
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-1"></div>
+
+                    <div class="col-sm-3">
+                        <label for="Mobile">Mobile <span style="color: #ff4500;">*</span></label>
+                        <input type="number" class="form-control" id="Mobile" ng-model="sevaMember.mobile" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="Mobile">E-Mail ID</label>
+                        <input type="email" class="form-control" id="email" ng-model="sevaMember.email"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <!--<div class="form-group">
+                    <div class="col-md-12">
+                        <p class="bg-primary">Seva's Details</p>
+                    </div>
+                    <div class="col-sm-1"></div>
+
+                    <div class="col-sm-3">
+                        <label for="SevaName">Select SEVA NAME</label>
+
+                        <select name="SevaName" class="form-control"
+                                ng-model="sevaMember.seva_name" id="SevaName"
+                                ng-options="v.seva_name  for v in sevaNamesList  track by v.id"
+                                ng-change="setDefaultVals(sevaMember.seva_name)"
+                                required>
+                            <option value="">&#45;&#45; Please select &#45;&#45;</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="Amount">Amount</label>
+                        <input type="number" class="form-control" id="Amount" ng-model="sevaMember.seva_amount"
+                               disabled >
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="Discount">Discount</label>
+                        <input type="number" class="form-control" id="Discount" ng-model="sevaMember.discount"
+                               disabled >
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>-->
+                <div class="form-group" style="margin-top: 55px" ng-show="memberSevaAddEditShowHide">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-success btn-block">Submit</button>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary btn-block" ng-click="EditCancelSevaMember()">
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group" style="margin-top: 55px" ng-show="!memberSevaAddEditShowHide">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-success btn-block" ng-click="updateSaveMember()">Update
+                        </button>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary btn-block" ng-click="EditCancelSevaMember()">
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div class="col-md-12"  ng-if="accessNot">
+                <table class="w3-table-all ">
+                    <tr class="w3-blue">
+                        <th>Sl.No</th>
+                        <th>Member Name</th>
+                        <th>Mobile / Phone</th>
+                        <th style="width:350px;">Address</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-repeat="member in sevaMemberList">
+                        <td>{{member.id}}</td>
+                        <td>{{member.firstname+' '+member.midname+' '+member.lastname}}</td>
+                        <td>{{member.mobile}} / {{member.phone}}</td>
+                        <td style="width:255px;">{{member.address+', '+member.town_village+', '+member.taluk+', '
+                            +member.district+','+member.state }}
+                        </td>
+                        <td><i class="glyphicon glyphicon-edit"></i>
+                            <i class="fa fa-edit" ng-click="EditSevaMember($event,$index,member)"
+                               style="color:black; font-size:24px;cursor:pointer"></i>
+                            &nbsp; / &nbsp;
+                            <i class="fa fa-remove" ng-click="DeleteSevaMember($event,$index,member)"
+                               data-toggle="modal" data-target="#mymemberModalDelete"
+                               style="cursor:pointer;color:red; font-size:24px"></i></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <form name="newSeva" ng-submit="saveNewName()" id="newSeva" class="tab-pane fade" ng-if="accessNot" >
+            <div class="row panel panel-primary">
+                <div class="panel-heading"><h4>Add New SEVA</h4>
+                </div>
+                <div class="form-group" style="margin-top: 25px">
+                    <div class="col-md-12">
+                        <p class="bg-primary">Seva Details</p>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <label for="seva_name">Seva Name <span style="color: #ff4500;">*</span></label>
+                        <input type="text" class="form-control" id="seva_name" ng-model="sevaName.seva_name" required>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="seva_amount">Amount <span style="color: #ff4500;">*</span></label>
+                        <input type="number" class="form-control" id="seva_amount" ng-model="sevaName.seva_amount"
+                               required>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="discount_Seva">Discount <span style="color: #ff4500;">*</span></label>
+                        <input type="number" class="form-control" id="discount_Seva" ng-model="sevaName.discount_Seva"
+                               required>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group" style="margin-top: 55px">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-success btn-block">Submit</button>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary btn-block">Cancel</button>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2"></div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <table class="w3-table-all ">
+                    <tr class="w3-blue">
+                        <th>Sl.No</th>
+                        <th>Seva Name</th>
+                        <th>Amount</th>
+                        <th>Discount</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-repeat="seva in sevaNamesList">
+                        <td>{{seva.id}}</td>
+                        <td>{{seva.seva_name}}</td>
+                        <td>{{seva.seva_amount}}</td>
+                        <td>{{seva.discount}}</td>
+                        <td><i class="glyphicon glyphicon-edit"></i>
+                            <i class="fa fa-edit" ng-click="EditSevaName($event,$index,seva)"
+                               data-toggle="modal" data-target="#mySevaModal"
+                               style="color:black; font-size:24px;cursor:pointer"></i>
+                            &nbsp; / &nbsp;
+                            <i class="fa fa-remove" ng-click="DeleteSevaName($event,$index,seva)"
+                               data-toggle="modal" data-target="#mySevaModalDelete"
+                               style="cursor:pointer;color:red; font-size:24px"></i></td>
+                    </tr>
+                </table>
+            </div>
+
+        </form>
+    </div>
+</div>
+<br>
+<!--Dynamic Content Starts-->
+
+<!-- Modal for Edit button -->
+
+<div class="modal fade" id="mySevaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+
+                <h4 class="modal-title" id="myModalLabel">Edit Seva Details</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" ng-submit="updateSaveName()">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="id">Name</label>
+                            <input class="form-control " ng-model="sevaEditVal.id" type="hidden" id="id" name="id">
+                            <input class="form-control " ng-model="sevaEditVal.seva_name" name="name"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="seva_amount">Amount</label>
+                            <input class="form-control " ng-model="sevaEditVal.seva_amount" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="seva_amount">Discount</label>
+                            <input class="form-control " ng-model="sevaEditVal.discount" name="name" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal for Delete Seva button -->
+
+<div class="modal fade" id="mySevaModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+
+                <h4 class="modal-title" id="myModalLabelDelete">Delete Seva Details</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" ng-submit="DeleteSavedName()">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <h1>Seva Name: {{sevaEditVal.seva_name}}</h1>
+
+                            <h2>Are your sure want to Delete?</h2>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal for Delete Member button -->
+
+<div class="modal fade" id="mymemberModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+
+                <h4 class="modal-title" id="myModalMemberDelete">Delete Member Details</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" ng-submit="DeleteSavedMember()">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <h1>Member Name: {{sevaEditMem.firstname+' '+sevaEditMem.midname
+                                +' '+sevaEditMem.lastname}}</h1>
+
+                            <h2>Are your sure want to Delete?</h2>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="request">
+    <span> Hello</span>
+</div>
+<script src="js/myHomeScript.js" type="application/javascript"></script>
+</body>
+</html>
